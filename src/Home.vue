@@ -1,9 +1,11 @@
 <template>
     <h1>Wel come {{msg}}</h1>
     <div v-if="!provider">
+        
         <button @click="login" >Login</button>
     </div>
     <div v-else >
+        <NavBar :provider="provider"/>
        <h1> hello login </h1> 
         <button @click="logout" >logout</button>
         <br><br>
@@ -26,6 +28,7 @@
 </template>
 
 <script>
+import NavBar from "./components/NavBar.vue";
 // HIGHLIGHTSTART-importModules
 import { Web3Auth } from "@web3auth/modal";
 // import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
@@ -44,6 +47,9 @@ export default {
             
             web3auth:null
         }
+    },
+    components: {
+        NavBar
     },
     props: {
         msg:String
@@ -81,7 +87,7 @@ export default {
             }
             console.log("Start");
             this.provider = await this.web3auth.connect();
-            console.log("End", this.provider);
+            console.log("End", typeof(this.provider));
             
         },
        async logout() {
